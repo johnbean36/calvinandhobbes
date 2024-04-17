@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <div class="nav"></div>
+        <div class="nav">
+            <a href="{% url 'about' %}"><h3>About</h3></a>
+        </div>
+        <div class="nav">
+            <a href="{% url 'books' %}"><h3>All Books</h3></a>
+        </div>
+        <div class="nav">
+            <a href="{% url 'books_create' %}"><h3>Create Book</h3></a>
+        </div>
+        <div class="nav"><a href="{% url 'store_create' %}"><h3>Add Store</h3></a></div>
+        <div class="nav"><a href="{% url 'store_list' %}">View All Stores</a></div>
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+</body>
+</html>

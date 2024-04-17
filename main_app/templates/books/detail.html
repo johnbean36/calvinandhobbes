@@ -1,0 +1,63 @@
+{% extends '../base.html' %}
+{% block content %}
+    <div class="container">
+        <div></div>
+        <div class = "card">
+            <div>{{candh.title}}</div>
+            <div>{{candh.date}}</div>
+            <div>{{candh.isbn}}</div>
+            <div>{{candh.details}}</div>
+            <div><a href="{% url 'books_update' candh.id %}">Edit</a></div>
+            <div><a href="{% url 'books_delete' candh.id %}">Delete</a></div>
+        </div>
+        <form action="{% url 'add_sales' candh.id %}" method="POST">
+            {% csrf_token %}
+            <!-- Render the inputs -->
+            {{ sales_form.as_p }}
+            <input type="submit" class="btn" value="Add Sale">
+          </form>
+        <div></div>
+    </div>
+    <table>
+        <tr>
+            <td>
+                Sales
+            </td>
+        </tr>
+    {% for sale in candh.sales_set.all %}
+    <tr>
+      <td>{{sale.date}}</td>
+      <td>{{sale.get_price_display}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <h3>Where books can be found</h3>
+    {% if stores.count %}
+    {% for store in stores %}
+    <div class="card">Stores book can be found in {{store.name}}, {{store.location}} </div>
+    {% endfor %}
+    {% endif %}
+
+    <h3>Stores books could be added to</h3>
+    {% if not_in_store.count %}
+    {% for store in not_in_store.all %}
+        <div class="card">
+            <div>Stores book could be available in {{store.name}}, {{store.location}}</div>
+        </div>
+    {% endfor %}
+    {% endif %}
+    
+
+{% endblock %}
+
+<script>
+    const dateEl = document.getElementById('id_date')
+    M.Datepicker.init(dateEl, {
+      format: 'yyyy-mm-dd',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      autoClose: true
+    })
+    const selectEl = document.getElementById('id_meal');
+    M.FormSelect.init(selectEl)
+  </script>
